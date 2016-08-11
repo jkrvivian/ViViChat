@@ -1,2 +1,2 @@
 # ViViChat
-a chat app
+a chatroom
