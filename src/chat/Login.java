@@ -16,11 +16,12 @@ public class Login {
 	private JButton registerBtn;
 	private JButton loginBtn;
 	
-	private Login(){
+	public Login(){
 		
-		login = new JFrame("Login");
+		login = new JFrame("ViViChat");
 		login.setSize(400,600);
 		login.setLocationRelativeTo(null);
+		login.setIconImage((new ImageIcon("src/photo/logo.png")).getImage());
 		basicPane = login.getLayeredPane();
 		basicPane.setLayout(null);
 		
@@ -81,6 +82,6 @@ public class Login {
 	
 	public static void main(String[] args) {
 		Login l = new Login();
-
+		MainWindow wd = new MainWindow();
 	}
 }
