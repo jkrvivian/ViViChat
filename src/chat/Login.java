@@ -2,6 +2,8 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Login {
 
@@ -11,6 +13,8 @@ public class Login {
 	private JTextField password;
 	private JLabel background;
 	private JLabel icon;
+	private JButton registerBtn;
+	private JButton loginBtn;
 	
 	private Login(){
 		
@@ -40,6 +44,37 @@ public class Login {
 		password = new JTextField("password");
 		password.setBounds(100, 400, 200, 35);
 		basicPane.add(password,JLayeredPane.MODAL_LAYER);
+		
+		ImageIcon loginPicture = new ImageIcon("src/photo/loginBtn.png");
+		Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
+		ImageIcon loginSelectedPicture = new ImageIcon("src/photo/loginBtnSelected.png");
+		Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
+		loginBtn = new JButton();
+		loginBtn.setIcon(new ImageIcon(temploginPicture));
+		loginBtn.setBounds(130, 460, 120, 45);
+		loginBtn.setContentAreaFilled(false);
+		loginBtn.setBorderPainted(false);
+		loginBtn.addMouseListener(new MouseListener(){
+			public void mouseClicked(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+				loginBtn.setIcon(new ImageIcon(temploginSelectedPicture));
+			}
+			public void mouseExited(MouseEvent e) {
+				loginBtn.setIcon(new ImageIcon(temploginPicture));
+			}
+			public void mousePressed(MouseEvent e) {
+			}
+			public void mouseReleased(MouseEvent e) {
+			}
+		});
+		basicPane.add(loginBtn,JLayeredPane.MODAL_LAYER);
+		
+		registerBtn = new JButton("Build a new account");
+		registerBtn.setBounds(95, 520, 200, 20);
+		registerBtn.setContentAreaFilled(false);
+		registerBtn.setBorderPainted(false);
+		basicPane.add(registerBtn,JLayeredPane.MODAL_LAYER);
 		
 		login.setVisible(true);
 	}
