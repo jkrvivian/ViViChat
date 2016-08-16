@@ -7,7 +7,6 @@ import java.awt.event.MouseListener;
 
 public class Login {
 
-	private JFrame login;
 	private JLayeredPane basicPane;
 	private JTextField account;
 	private JTextField password;
@@ -18,11 +17,7 @@ public class Login {
 	
 	public Login(){
 		
-		login = new JFrame("ViViChat");
-		login.setSize(400,600);
-		login.setLocationRelativeTo(null);
-		login.setIconImage((new ImageIcon("src/photo/logo.png")).getImage());
-		basicPane = login.getLayeredPane();
+		basicPane = new JLayeredPane();
 		basicPane.setLayout(null);
 		
 		ImageIcon iconPicture = new ImageIcon("src/photo/icon.png");
@@ -50,6 +45,7 @@ public class Login {
 		Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
 		ImageIcon loginSelectedPicture = new ImageIcon("src/photo/loginBtnSelected.png");
 		Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
+		
 		loginBtn = new JButton();
 		loginBtn.setIcon(new ImageIcon(temploginPicture));
 		loginBtn.setBounds(130, 460, 120, 45);
@@ -76,12 +72,10 @@ public class Login {
 		registerBtn.setContentAreaFilled(false);
 		registerBtn.setBorderPainted(false);
 		basicPane.add(registerBtn,JLayeredPane.MODAL_LAYER);
-		
-		login.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		Login l = new Login();
-		MainWindow wd = new MainWindow();
+	public JLayeredPane getPane(){
+		return basicPane;
 	}
+	
 }
