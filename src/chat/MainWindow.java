@@ -15,7 +15,7 @@ public class MainWindow {
 		
 		Login login = new Login();
 		ChatPage chatPage = new ChatPage();
-		window.setLayeredPane(chatPage.getPane());
+		window.setLayeredPane(login.getPane());
 		window.setVisible(true);
 		
 	}

@@ -21,10 +21,10 @@ public class Login {
 		basicPane.setLayout(null);
 		
 		ImageIcon iconPicture = new ImageIcon("src/photo/icon.png");
-		Image tempIconPicture = iconPicture.getImage().getScaledInstance(245, 200, iconPicture.getImage().SCALE_DEFAULT);
+		Image tempIconPicture = iconPicture.getImage().getScaledInstance(200, 225, iconPicture.getImage().SCALE_DEFAULT);
 		
 		icon = new JLabel(new ImageIcon(tempIconPicture));
-		icon.setBounds(90,75,245,200);
+		icon.setBounds(100,75,200,225);
 		basicPane.add(icon,JLayeredPane.MODAL_LAYER);
 		
 		ImageIcon backgroundPicture = new ImageIcon("src/photo/background.png");
