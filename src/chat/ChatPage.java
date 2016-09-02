@@ -9,6 +9,8 @@ public class ChatPage {
 	
 	private JLayeredPane basicPane;
 	private JLabel background;
+	private JLayeredPane upPane;
+	private JLayeredPane downPane;
 	
 	public ChatPage(){
 		basicPane = new JLayeredPane();
@@ -20,6 +22,15 @@ public class ChatPage {
 		background.setBounds(0, 0, 400, 600);
 		basicPane.add(background,JLayeredPane.DEFAULT_LAYER);
 		
+		upPane = new JLayeredPane();
+		upPane.setBounds(0,0,400,45);
+		upPane.setLayout(null);
+		basicPane.add(upPane,JLayeredPane.MODAL_LAYER);
+		
+		downPane = new JLayeredPane();
+		downPane.setBounds(0,500,400,100);
+		downPane.setLayout(null);
+		basicPane.add(downPane,JLayeredPane.MODAL_LAYER);
 	}
 	
 	public JLayeredPane getPane(){
