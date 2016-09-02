@@ -42,9 +42,9 @@ public class Login {
 		basicPane.add(password,JLayeredPane.MODAL_LAYER);
 		
 		ImageIcon loginPicture = new ImageIcon("src/photo/loginBtn.png");
-		Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
+		final Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
 		ImageIcon loginSelectedPicture = new ImageIcon("src/photo/loginBtnSelected.png");
-		Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
+		final Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
 		
 		loginBtn = new JButton();
 		loginBtn.setIcon(new ImageIcon(temploginPicture));
