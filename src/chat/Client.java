@@ -1,20 +1,39 @@
 package chat;
 
+import java.awt.Font;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import javax.swing.*;
 
 public class Client {
 	
 	private String host = "127.0.0.1";
 	private int port = 1233;
+	
+	private JFrame clientWindow;
+	private JTextArea message;
+	
 	public Client() throws UnknownHostException, IOException
 	{
+		
+		clientWindow = new JFrame("Client");
+		clientWindow.setSize(400,600);
+		clientWindow.setLocationRelativeTo(null);
+		clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		clientWindow.setVisible(true);
+		
+		Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 20);
+		message = new JTextArea();
+		message.setSize(200, 400);
+		message.setFont(font);
+		clientWindow.add(message);
+		
 		Socket client = new Socket(host, port);
 		try{
-			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
+			BufferedOutputStream out = new BufferedOutputStream(client.getOutputStream());
 			
-			out.writeObject("send from client ");
+			out.write("send from client".getBytes());
 			out.flush();
 			out.close();
 			out = null;
