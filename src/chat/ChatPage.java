@@ -16,6 +16,8 @@ public class ChatPage {
 		basicPane = new JLayeredPane();
 		basicPane.setLayout(null);
 		
+		Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 20);
+		
 		ImageIcon backgroundPicture = new ImageIcon("src/photo/background.png");
 		Image tempBackGroundPicture = backgroundPicture.getImage().getScaledInstance(400, 600, backgroundPicture.getImage().SCALE_DEFAULT);
 		background = new JLabel(new ImageIcon(tempBackGroundPicture));
