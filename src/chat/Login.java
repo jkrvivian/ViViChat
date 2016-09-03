@@ -2,11 +2,19 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Login {
 
+	private String host = "127.0.0.1";
+	private int port = 1233;
+	private Socket clientSocket;
+	private ObjectOutputStream clientOutput;
+	
 	private JLayeredPane basicPane;
 	private JTextField account;
 	private JTextField password;
@@ -42,17 +50,39 @@ public class Login {
 		basicPane.add(password,JLayeredPane.MODAL_LAYER);
 		
 		ImageIcon loginPicture = new ImageIcon("src/photo/loginBtn.png");
-		final Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
+		Image temploginPicture = loginPicture.getImage().getScaledInstance(120, 45, loginPicture.getImage().SCALE_DEFAULT);
 		ImageIcon loginSelectedPicture = new ImageIcon("src/photo/loginBtnSelected.png");
-		final Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
+		Image temploginSelectedPicture = loginSelectedPicture.getImage().getScaledInstance(120, 45, loginSelectedPicture.getImage().SCALE_DEFAULT);
 		
 		loginBtn = new JButton();
 		loginBtn.setIcon(new ImageIcon(temploginPicture));
 		loginBtn.setBounds(130, 460, 120, 45);
 		loginBtn.setContentAreaFilled(false);
 		loginBtn.setBorderPainted(false);
+		
 		loginBtn.addMouseListener(new MouseListener(){
 			public void mouseClicked(MouseEvent e) {
+				//connect to server
+				try {
+					
+					if(clientSocket == null)
+						clientSocket = new Socket(host, port);
+					if(clientOutput == null)
+						clientOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+					
+					try{
+						clientOutput.writeObject(new String("Hello"));
+						clientOutput.flush();
+					} catch(java.io.IOException e1){
+						
+					}
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			public void mouseEntered(MouseEvent e) {
 				loginBtn.setIcon(new ImageIcon(temploginSelectedPicture));
@@ -78,4 +108,7 @@ public class Login {
 		return basicPane;
 	}
 	
+	public Socket getSocket(){
+		return clientSocket;
+	}
 }

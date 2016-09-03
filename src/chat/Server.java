@@ -5,85 +5,83 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
+import java.lang.Thread;
 
 
-public class Server extends java.lang.Thread {
+public class Server extends Thread {
 	
-		private ServerSocket server;
-		private JFrame serverWindow;
-		private JTextArea message;
-	    //private ArrayList<>;
-	    
-		public Server() throws IOException
-		{
-			serverWindow = new JFrame("Server");
-			serverWindow.setSize(400,600);
-			serverWindow.setLocationRelativeTo(null);
-			serverWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			serverWindow.setVisible(true);
-			
-			Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 20);
-			message = new JTextArea();
-			message.setSize(200, 400);
-			message.setFont(font);
-			serverWindow.add(message);
-			
-			//start server
-			try{
-				server = new ServerSocket(1233);
-			}catch(java.io.IOException e)
-			{
-				System.out.println("Error");
-				System.out.println("IOException: " + e);
-			}
-			message.append("Server listening...\n");
-			System.out.println("Server listening...");
-		}
+	private ServerSocket server;
+	private JFrame serverWindow;
+	private JTextArea message;
+    //private ArrayList<>;
+    
+	public Server() 
+	{
+		serverWindow = new JFrame("Server");
+		serverWindow.setSize(400,600);
+		serverWindow.setLocationRelativeTo(null);
+		serverWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverWindow.setVisible(true);
 		
-		public void run()
+		message = new JTextArea();
+		message.setSize(200, 400);
+		message.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
+		serverWindow.add(message);
+		
+		//start server
+		try{
+			server = new ServerSocket(1233);
+		}catch(java.io.IOException e)
 		{
-			while(true)
-			{
-				Socket tunnel;
-				BufferedInputStream in;
+			System.out.println("Error"+'\n'+"IOException: " + e);
+		}
+		message.append("Server listening...\n");
+	}
+	
+	public void run()
+	{
+		while(true)
+		{
+			Socket tunnel;
+			String clientIP = null;
+			try{
+				tunnel = server.accept();
+				clientIP = server.getInetAddress().toString();
 				
-				try{
-					tunnel = server.accept();
-					message.append("connected successfully!\n");
-					message.append("connected with " + server.getInetAddress() + "\n");
-					System.out.println("connected successfully!");		
-					System.out.println("connected with " + server.getInetAddress());
+				ObjectInputStream clientInput = new ObjectInputStream(tunnel.getInputStream());
+				ObjectOutputStream serverOutput = new ObjectOutputStream(tunnel.getOutputStream());
+				String data;
+				
+				message.append("connected successfully!\n");
+				message.append("connected with " + clientIP + "\n");
+				
+				while(true)
+				{
+					data = (String)clientInput.readObject();
 					
-					in=new BufferedInputStream (tunnel.getInputStream());
-					//	PrintWriter out=new PrintWriter(tunnel.getOutputStream());
-
-						while(true)
-						{
-							byte[] input = new byte[2048];
-							int len;							
-							if((len =  in.read(input)) < 0)
-							{
-								in.close();
-								in = null;								
-								break;
-							}
-							String data = new String(input, 0 ,len);
-							message.append(Integer.toString(len)+ "\n");
-							message.append(data+ "\n");
-							System.out.println(len);
-							System.out.println(data);
-						}
+					if(data.equals("exit"))
+					{
+						clientInput.close();
 						tunnel.close();
-						
-				} catch(IOException e) {
-					System.out.println("something wrong while connecting...");
-					System.out.println(e);
+						message.append("Server listening...\n");
+					}
+					else
+						message.append(clientIP + "¡@say :" + data + "\n");
 				}
-		    }
-	  }
+			} catch(IOException e) {
+				System.out.println(clientIP + " has something wrong while connecting...");
+				System.out.println(e);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+		
 	public static void main (String args[]) throws IOException
 	{
-		(new Server()).start();
+		Server myServer = new Server();
+		myServer.run();
 	}
 }
 
